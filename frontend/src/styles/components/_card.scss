@@ -1,0 +1,65 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================================
+// COMPONENTE: CARD
+// =============================================================
+
+.card {
+  @include card-base;
+  overflow: hidden;
+
+  &--elevated {
+    @include card-elevated;
+  }
+
+  &--hover {
+    transition: background-color $transition-normal, transform $transition-normal, box-shadow $transition-normal;
+
+    &:hover {
+      background-color: $color-card-hover;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &--accent-cyan   { border-color: rgba($color-accent-cyan,   0.3); }
+  &--accent-green  { border-color: rgba($color-accent-green,  0.3); }
+  &--accent-orange { border-color: rgba($color-accent-orange, 0.3); }
+  &--accent-purple { border-color: rgba($color-accent-purple, 0.3); }
+  &--error         { border-color: rgba($color-error,         0.4); background-color: rgba($color-error, 0.05); }
+  &--success       { border-color: rgba($color-success,       0.4); background-color: rgba($color-success, 0.05); }
+  &--warning       { border-color: rgba($color-warning,       0.4); background-color: rgba($color-warning, 0.05); }
+
+  &__header {
+    padding: $space-5 $space-6 $space-3;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: $fs-lg;
+    font-weight: $fw-semibold;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: $fs-sm;
+    color: $color-text-muted;
+    margin-top: $space-1;
+  }
+
+  &__content {
+    padding: $space-6;
+  }
+
+  &__footer {
+    padding: $space-4 $space-6;
+    border-top: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $space-3;
+  }
+}

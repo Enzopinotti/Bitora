@@ -1,0 +1,144 @@
+@use 'variables' as *;
+
+// =============================================================
+// MIXINS GLOBALES DE BITORA
+// =============================================================
+
+// ─── Responsive ───────────────────────────────────────────────
+@mixin respond-to($bp) {
+  @if $bp == 'sm' {
+    @media (min-width: #{$bp-sm}) { @content; }
+  } @else if $bp == 'md' {
+    @media (min-width: #{$bp-md}) { @content; }
+  } @else if $bp == 'lg' {
+    @media (min-width: #{$bp-lg}) { @content; }
+  } @else if $bp == 'xl' {
+    @media (min-width: #{$bp-xl}) { @content; }
+  } @else if $bp == '2xl' {
+    @media (min-width: #{$bp-2xl}) { @content; }
+  }
+}
+
+@mixin mobile-only {
+  @media (max-width: #{$bp-md - 1px}) { @content; }
+}
+
+@mixin tablet-only {
+  @media (min-width: #{$bp-md}) and (max-width: #{$bp-lg - 1px}) { @content; }
+}
+
+// ─── Layout helpers ───────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// ─── Container ────────────────────────────────────────────────
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $space-4;
+
+  @include respond-to('lg') {
+    padding-inline: $space-8;
+  }
+}
+
+// ─── Card base ────────────────────────────────────────────────
+@mixin card-base {
+  background-color: $color-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+@mixin card-elevated {
+  background-color: $color-card-elevated;
+  border: 1px solid rgba($color-accent-cyan, 0.2);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+}
+
+// ─── Tipografía ───────────────────────────────────────────────
+@mixin font-display {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+}
+
+@mixin font-mono {
+  font-family: $font-mono;
+  font-weight: $fw-normal;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ─── Focus visible ────────────────────────────────────────────
+@mixin focus-ring {
+  outline: 2px solid $color-accent-cyan;
+  outline-offset: 2px;
+}
+
+// ─── Scrollbar personalizado ──────────────────────────────────
+@mixin custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: $color-border $color-card;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-card;
+    border-radius: $radius-sm;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $radius-sm;
+    &:hover { background: $color-border-hover; }
+  }
+}
+
+// ─── Gradientes ───────────────────────────────────────────────
+@mixin gradient-primary {
+  background: linear-gradient(135deg, $color-accent-cyan, $color-accent-green);
+}
+
+@mixin gradient-hero-glow($color, $opacity: 0.15) {
+  background: radial-gradient(ellipse at center, rgba($color, $opacity) 0%, transparent 70%);
+}
+
+// ─── Glow effects ─────────────────────────────────────────────
+@mixin glow($color, $spread: 20px, $opacity: 0.3) {
+  box-shadow: 0 0 $spread rgba($color, $opacity);
+}
+
+// ─── Animaciones inline ───────────────────────────────────────
+@mixin transition-all {
+  transition: all $transition-normal;
+}
+
+@mixin hover-lift {
+  transition: transform $transition-normal, box-shadow $transition-normal;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}

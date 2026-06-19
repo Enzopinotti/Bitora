@@ -1,0 +1,173 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================================
+// COMPONENTE: TABS
+// =============================================================
+
+.tabs {
+  width: 100%;
+
+  &__list {
+    display: flex;
+    gap: $space-1;
+    background-color: $color-card;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    padding: $space-1;
+    flex-wrap: wrap;
+  }
+
+  &__trigger {
+    flex: 1;
+    min-width: max-content;
+    padding: $space-2 $space-4;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $color-text-muted;
+    background: transparent;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: background-color $transition-fast, color $transition-fast;
+    white-space: nowrap;
+
+    &:focus-visible { @include focus-ring; }
+
+    &:hover:not(.tabs__trigger--active) {
+      color: $color-text-secondary;
+      background-color: rgba($color-border, 0.3);
+    }
+
+    &--active {
+      background-color: $color-accent-cyan;
+      color: $color-bg-primary;
+      font-weight: $fw-semibold;
+    }
+  }
+
+  &__content {
+    margin-top: $space-4;
+    animation: fade-in 0.25s ease;
+  }
+}
+
+
+// =============================================================
+// COMPONENTE: BADGE
+// =============================================================
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  border-radius: $radius-full;
+  border: 1px solid $color-border;
+  background-color: $color-card;
+  color: $color-text-secondary;
+  white-space: nowrap;
+
+  &--cyan   { background-color: rgba($color-accent-cyan,   0.1); color: $color-accent-cyan;   border-color: rgba($color-accent-cyan,   0.3); }
+  &--green  { background-color: rgba($color-accent-green,  0.1); color: $color-accent-green;  border-color: rgba($color-accent-green,  0.3); }
+  &--orange { background-color: rgba($color-accent-orange, 0.1); color: $color-accent-orange; border-color: rgba($color-accent-orange, 0.3); }
+  &--purple { background-color: rgba($color-accent-purple, 0.1); color: $color-accent-purple; border-color: rgba($color-accent-purple, 0.3); }
+  &--error  { background-color: rgba($color-error,         0.1); color: $color-error;         border-color: rgba($color-error,         0.3); }
+  &--success { background-color: rgba($color-success,      0.1); color: $color-success;       border-color: rgba($color-success,       0.3); }
+}
+
+
+// =============================================================
+// COMPONENTE: PROGRESS
+// =============================================================
+
+.progress {
+  width: 100%;
+  height: 6px;
+  background-color: $color-card-elevated;
+  border-radius: $radius-full;
+  overflow: hidden;
+
+  &__bar {
+    height: 100%;
+    border-radius: $radius-full;
+    background-color: $color-accent-cyan;
+    transition: width 0.4s ease;
+  }
+
+  &--green  .progress__bar { background-color: $color-accent-green; }
+  &--orange .progress__bar { background-color: $color-accent-orange; }
+  &--purple .progress__bar { background-color: $color-accent-purple; }
+}
+
+
+// =============================================================
+// COMPONENTE: SPINNER
+// =============================================================
+
+.spinner {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  border: 2px solid rgba($color-accent-cyan, 0.3);
+  border-top-color: $color-accent-cyan;
+  border-radius: $radius-full;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+
+  &--sm { width: 1em; height: 1em; }
+  &--lg { width: 2em; height: 2em; border-width: 3px; }
+  &--white {
+    border-color: rgba(white, 0.3);
+    border-top-color: white;
+  }
+}
+
+
+// =============================================================
+// COMPONENTE: ALERT / MESSAGE
+// =============================================================
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-4;
+  border-radius: $radius-lg;
+  border: 1px solid;
+  font-size: $fs-sm;
+
+  &__icon { flex-shrink: 0; margin-top: 2px; }
+  &__title { font-weight: $fw-semibold; margin-bottom: $space-1; }
+  &__text { color: $color-text-secondary; }
+
+  &--error {
+    background-color: rgba($color-error, 0.08);
+    border-color: rgba($color-error, 0.3);
+    color: $color-error;
+    .alert__text { color: lighten($color-error, 20%); }
+  }
+
+  &--success {
+    background-color: rgba($color-success, 0.08);
+    border-color: rgba($color-success, 0.3);
+    color: $color-success;
+    .alert__text { color: lighten($color-success, 20%); }
+  }
+
+  &--warning {
+    background-color: rgba($color-warning, 0.08);
+    border-color: rgba($color-warning, 0.3);
+    color: $color-warning;
+    .alert__text { color: lighten($color-warning, 20%); }
+  }
+
+  &--info {
+    background-color: rgba($color-accent-cyan, 0.08);
+    border-color: rgba($color-accent-cyan, 0.3);
+    color: $color-accent-cyan;
+    .alert__text { color: $color-text-secondary; }
+  }
+}

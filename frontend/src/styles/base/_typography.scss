@@ -1,0 +1,60 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================================
+// TIPOGRAFÍA BASE
+// =============================================================
+
+.text-display {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+}
+
+.text-mono {
+  font-family: $font-mono;
+}
+
+// Tamaños
+.text-xs     { font-size: $fs-xs; }
+.text-sm     { font-size: $fs-sm; }
+.text-base   { font-size: $fs-base; }
+.text-lg     { font-size: $fs-lg; }
+.text-xl     { font-size: $fs-xl; }
+.text-2xl    { font-size: $fs-2xl; }
+.text-3xl    { font-size: $fs-3xl; }
+.text-4xl    { font-size: $fs-4xl; }
+
+// Colores de texto
+.text-primary   { color: $color-text; }
+.text-secondary { color: $color-text-secondary; }
+.text-muted     { color: $color-text-muted; }
+.text-accent    { color: $color-accent-cyan; }
+.text-success   { color: $color-success; }
+.text-error     { color: $color-error; }
+.text-warning   { color: $color-warning; }
+
+// Pesos
+.font-normal   { font-weight: $fw-normal; }
+.font-medium   { font-weight: $fw-medium; }
+.font-semibold { font-weight: $fw-semibold; }
+.font-bold     { font-weight: $fw-bold; }
+
+// Patrones especiales
+.binary-decoration {
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  color: rgba($color-border, 0.6);
+  user-select: none;
+  pointer-events: none;
+  animation: pulse-opacity 3s ease-in-out infinite;
+}
+
+.code-inline {
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  background-color: $color-card-elevated;
+  color: $color-accent-cyan;
+  padding: 0.1em 0.4em;
+  border-radius: $radius-sm;
+  border: 1px solid $color-border;
+}

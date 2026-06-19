@@ -1,0 +1,30 @@
+// =============================================================
+// MAIN STYLESHEET ENTRY POINT
+// =============================================================
+
+// 1. Abstracts (variables, mixins, helper functions)
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// 2. Base (resets, core typography, global animations)
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/animations';
+
+// 3. Components (reusable visual elements)
+@use 'components/button';
+@use 'components/card';
+@use 'components/ui';
+
+// 4. Layout (structural scaffolding: header, footer, page grid)
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/layout';
+
+// 5. Utilities & Patterns
+.binary-pattern {
+  background-image: radial-gradient(rgba($color-accent-cyan, 0.15) 1px, transparent 0),
+                    radial-gradient(rgba($color-accent-green, 0.1) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}

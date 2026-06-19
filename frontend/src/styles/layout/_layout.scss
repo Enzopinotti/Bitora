@@ -1,0 +1,41 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================================
+// LAYOUT: MAIN CONTAINER & APP STRUCTURE
+// =============================================================
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $color-bg-primary;
+  color: $color-text;
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Global utility/wrapper classes for layout
+.container {
+  @include container;
+}
+
+.section {
+  padding: $space-12 0;
+
+  @include respond-to('md') {
+    padding: $space-16 0;
+  }
+  
+  &--compact {
+    padding: $space-6 0;
+    
+    @include respond-to('md') {
+      padding: $space-8 0;
+    }
+  }
+}

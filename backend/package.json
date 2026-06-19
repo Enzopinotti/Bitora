@@ -1,0 +1,23 @@
+{
+  "name": "bitora-backend",
+  "version": "1.0.0",
+  "description": "API REST de compresion de datos (Huffman y Shannon-Fano) para Bitora",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^2.2.0"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}

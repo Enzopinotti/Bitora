@@ -1,0 +1,146 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// =============================================================
+// LAYOUT: HEADER
+// =============================================================
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  width: 100%;
+  border-bottom: 1px solid $color-border;
+  background-color: rgba($color-bg-primary, 0.95);
+  backdrop-filter: blur(8px);
+
+  &__container {
+    @include container;
+    @include flex-between;
+    height: $header-height;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    text-decoration: none;
+    
+    &-icon-wrap {
+      position: relative;
+      @include flex-center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: $radius-md;
+      background-color: rgba($color-accent-cyan, 0.1);
+      border: 1px solid rgba($color-accent-cyan, 0.3);
+    }
+    
+    &-icon {
+      color: $color-accent-cyan;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+    
+    &-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      border-radius: $radius-full;
+      background-color: $color-accent-green;
+    }
+    
+    &-text {
+      font-family: $font-display;
+      font-size: $fs-xl;
+      font-weight: $fw-bold;
+      color: $color-text;
+    }
+  }
+
+  &__nav {
+    display: none;
+    align-items: center;
+    gap: $space-1;
+
+    @include respond-to('md') {
+      display: flex;
+    }
+
+    &-link {
+      padding: $space-2 $space-4;
+      font-size: $fs-sm;
+      font-weight: $fw-medium;
+      color: $color-text-secondary;
+      border-radius: $radius-md;
+      transition: color $transition-fast, background-color $transition-fast;
+
+      &:hover {
+        color: $color-text;
+        background-color: $color-card;
+      }
+
+      &--active {
+        color: $color-accent-cyan;
+        background-color: rgba($color-accent-cyan, 0.1);
+        
+        &:hover {
+          color: $color-accent-cyan;
+          background-color: rgba($color-accent-cyan, 0.15);
+        }
+      }
+    }
+  }
+
+  &__actions {
+    display: none;
+
+    @include respond-to('md') {
+      display: flex;
+      align-items: center;
+      gap: $space-3;
+    }
+  }
+
+  &__mobile-toggle {
+    display: flex;
+    padding: $space-2;
+    color: $color-text;
+    background: transparent;
+    border: none;
+
+    @include respond-to('md') {
+      display: none;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+      border-radius: $radius-md;
+    }
+  }
+
+  &__mobile-menu {
+    border-top: 1px solid $color-border;
+    background-color: $color-bg-primary;
+    padding: $space-4 0;
+
+    @include respond-to('md') {
+      display: none;
+    }
+    
+    .header__nav {
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+      align-items: stretch;
+      padding: 0 $space-4;
+    }
+
+    .header__nav-link {
+      display: block;
+      padding: $space-3 $space-4;
+    }
+  }
+}
