@@ -1,106 +1,116 @@
 # Bitora - Compresor de Datos Educativo
 
-Bitora es una aplicación web interactiva y educativa diseñada para estudiar, visualizar y comparar los algoritmos de compresión de datos sin pérdida más clásicos: **Huffman** y **Shannon-Fano**.
+Bitora es una aplicación web interactiva y educativa diseñada para estudiar, visualizar y comparar algoritmos clásicos de compresión sin pérdida: **Huffman** y **Shannon-Fano**.
 
-## Tecnologías Utilizadas
+## Tecnologías utilizadas
 
 ### Frontend
-- **React 18** (desplegado con **Vite**)
-- **Sass (SCSS)** para estilos modulares basados en BEM
-- **Recharts** para el gráfico interactivo de frecuencias
-- **Lucide React** para iconografía moderna y limpia
+- **React 18** + **Vite**
+- **Sass (SCSS)**
+- **Recharts** para frecuencias y métricas
+- **Lucide React** para iconografía
 
 ### Backend
-- **Node.js** con **Express**
-- **Multer** para el manejo de carga de archivos de texto
-- **Jest** para los tests unitarios de algoritmos y métricas
+- **Node.js** + **Express**
+- **Multer** para carga de archivos de texto
+- **Jest** para tests de algoritmos y métricas
 
 ### Infraestructura
-- **Docker** y **Docker Compose** para orquestación en contenedores
-- **Nginx** para servir el cliente estático y redirigir peticiones API en producción
+- **Docker** y **Docker Compose**
+- **Nginx** para servir el frontend y enrutar la API en producción
 
 ---
 
-## Cómo Levantar la Aplicación
+## Puesta en marcha
 
-### Opción 1: Con Docker (Recomendada)
-Para levantar tanto el cliente como el servidor de forma local mediante Docker:
+### Opción 1: Docker
 
-1. Asegúrate de tener instalado [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-2. Desde la raíz de este proyecto (`/bitora-app-design`), ejecuta:
-   ```bash
-   docker compose up --build
-   ```
-3. Accede a la aplicación en:
-   - **Frontend**: [http://localhost:8080](http://localhost:8080)
-   - **Backend API Health**: [http://localhost:4000/api/health](http://localhost:4000/api/health)
+```bash
+docker compose up --build
+```
 
-### Opción 2: Desarrollo Local (Sin Docker)
+- Frontend: http://localhost:8080
+- API health: http://localhost:4000/api/health
 
-#### Levantando el Backend
-1. Dirígete a la carpeta `backend`:
-   ```bash
-   cd backend
-   ```
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-3. Inicia el servidor de desarrollo:
-   ```bash
-   npm run dev
-   ```
-   El backend correrá en [http://localhost:4000](http://localhost:4000).
+### Opción 2: desarrollo local
 
-#### Levantando el Frontend
-1. Dirígete a la carpeta `frontend`:
-   ```bash
-   cd frontend
-   ```
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-3. Inicia el cliente de desarrollo:
-   ```bash
-   npm run dev
-   ```
-   Vite desplegará el cliente en [http://localhost:5173](http://localhost:5173).
+Backend:
+
+```bash
+cd backend
+npm ci
+npm run dev
+```
+
+Frontend:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Vite expone el cliente en http://localhost:5173 y el backend corre en http://localhost:4000.
 
 ---
 
-## Ejecutando Tests
+## Quality gate
 
-Para ejecutar los tests unitarios de la lógica de los algoritmos (Huffman, Shannon-Fano) y el cálculo de métricas matemáticas (Entropía, Eficiencia, Longitud promedio):
+La validación de ingeniería del repositorio es deliberadamente pequeña y verificable:
 
-1. Dirígete a la carpeta `backend`:
-   ```bash
-   cd backend
-   ```
-2. Ejecuta:
-   ```bash
-   npm test
-   ```
+```bash
+cd backend
+npm ci
+npm test -- --runInBand
+
+cd ../frontend
+npm ci
+npm run build
+
+cd ..
+docker compose config --quiet
+```
+
+GitHub Actions ejecuta el mismo contrato separando fallos de backend, frontend y Compose. El frontend todavía no tiene una suite de comportamiento propia; no se publica un test vacío sólo para obtener un check verde.
+
+Los invariantes de compresión, métricas y compatibilidad del formato `.bitora` están documentados en [`docs/compression-contracts.md`](./docs/compression-contracts.md).
 
 ---
 
-## Funcionalidades de Bitora
+## Funcionalidades
 
-1. **Laboratorio de Compresión**:
+1. **Laboratorio de compresión**
    - Ingreso de texto manual o carga de archivos `.txt`.
-   - Selección del algoritmo (**Huffman**, **Shannon-Fano** o **Comparar ambos**).
-   - Visualización interactiva del gráfico de frecuencias de cada símbolo.
-   - Tabla detallada de códigos binarios asignados por símbolo, incluyendo frecuencias y probabilidades.
-   - Representación visual e interactiva del **Árbol de Huffman** generado vía SVG.
-   - Sección de texto codificado en binario, texto decodificado y validación del flujo completo sin pérdida.
+   - Selección de **Huffman**, **Shannon-Fano** o comparación de ambos.
+   - Visualización de frecuencias, probabilidades y códigos binarios.
+   - Árbol de Huffman en SVG.
+   - Codificación, decodificación y validación del flujo sin pérdida.
 
-2. **Comparador Lado a Lado**:
-   - Compara las métricas obtenidas con Huffman frente a Shannon-Fano simultáneamente para el mismo texto.
-   - Identifica el ganador y la reducción lograda en bits.
+2. **Comparador lado a lado**
+   - Ejecuta ambos algoritmos sobre el mismo input.
+   - Compara métricas y reducción lograda.
 
-3. **Formato `.bitora`**:
-   - Permite descargar el resultado comprimido de tu análisis junto con los metadatos y la tabla de códigos en un archivo de formato `.bitora`.
-   - Admite cargar archivos `.bitora` en el laboratorio para restaurar análisis de sesiones anteriores.
+3. **Formato `.bitora`**
+   - Exporta un análisis con sus metadatos y tabla de códigos.
+   - Permite restaurar análisis anteriores desde archivos `.bitora`.
 
-4. **Sección Teórica**:
-   - Explicación de los fundamentos teóricos de la compresión sin pérdida, entropía de Shannon, árbol de Huffman, particionamiento de Shannon-Fano y un glosario de términos.
+4. **Sección teórica**
+   - Entropía de Shannon.
+   - Árbol de Huffman.
+   - Particionamiento Shannon-Fano.
+   - Glosario de términos.
+
+---
+
+## Contratos de producto
+
+Bitora prioriza comportamiento demostrable sobre una asignación binaria específica. Entre los contratos que deben mantenerse:
+
+- `decode(encode(input)) === input` para los algoritmos soportados;
+- frecuencias consistentes con el input analizado;
+- probabilidades derivadas de esas frecuencias;
+- comparación de algoritmos sobre exactamente el mismo input;
+- métricas calculadas desde la misma tabla/codificación que muestra la UI;
+- restauración segura de archivos `.bitora`, sin aceptar silenciosamente datos malformados.
+
+Ver el detalle en [`docs/compression-contracts.md`](./docs/compression-contracts.md).
