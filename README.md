@@ -56,22 +56,36 @@ Vite expone el cliente en http://localhost:5173 y el backend corre en http://loc
 
 ## Quality gate
 
-La validación de ingeniería del repositorio es deliberadamente pequeña y verificable:
+El contrato completo de calidad se ejecuta desde la raíz:
 
 ```bash
-cd backend
-npm ci
-npm test -- --runInBand
-
-cd ../frontend
-npm ci
-npm run build
-
-cd ..
-docker compose config --quiet
+./scripts/quality.sh
 ```
 
-GitHub Actions ejecuta el mismo contrato separando fallos de backend, frontend y Compose. El frontend todavía no tiene una suite de comportamiento propia; no se publica un test vacío sólo para obtener un check verde.
+Ese comando corre, en orden:
+
+1. backend: `npm ci` + Jest con `--runInBand`;
+2. frontend: `npm ci` + build de producción Vite;
+3. `docker compose config --quiet`.
+
+También se puede ejecutar un carril aislado:
+
+```bash
+./scripts/quality.sh backend
+./scripts/quality.sh frontend
+./scripts/quality.sh compose
+```
+
+GitHub Actions invoca **el mismo script** por carril para conservar jobs separados y paralelos sin duplicar la secuencia de comandos en el workflow.
+
+### Entorno de referencia
+
+- CI usa Node.js 20;
+- `.nvmrc` fija `20` para reproducir ese runtime con `nvm use`;
+- el script requiere Bash, Node.js/npm para los carriles de aplicación y Docker Compose v2 para `compose`;
+- `npm ci` recrea los `node_modules` de cada aplicación a partir de sus lockfiles; es intencional porque el comando apunta a reproducibilidad, no a ser el loop de desarrollo más rápido.
+
+El frontend todavía no tiene una suite de comportamiento propia; no se publica un test vacío sólo para obtener un check verde.
 
 Los invariantes de compresión, métricas y compatibilidad del formato `.bitora` están documentados en [`docs/compression-contracts.md`](./docs/compression-contracts.md).
 
